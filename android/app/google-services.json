@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "738733462723",
+    "firebase_url": "https://appmedic-e12d1.firebaseio.com",
+    "project_id": "appmedic-e12d1",
+    "storage_bucket": "appmedic-e12d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738733462723:android:a652f572754579e14abe76",
+        "android_client_info": {
+          "package_name": "com.appmedic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "738733462723-a72mi65nn55heu22fhjn9tbvfemmn3js.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnVAN3pwnArQmNr2CN4a-wiJSc5FwiUhI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "738733462723-a72mi65nn55heu22fhjn9tbvfemmn3js.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

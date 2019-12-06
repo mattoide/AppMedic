@@ -11,6 +11,12 @@ module.exports = StyleSheet.create({
        backgroundColor:'#2E2A2A',
        justifyContent: 'center',
 
+    },    wizard: {
+
+        flex: 1,
+       backgroundColor:'#2E2A2A',
+       justifyContent: 'center',
+
     },
 
 });

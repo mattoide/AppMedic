@@ -133,26 +133,26 @@ export default class Dashboard extends Component {
     getPedometer(){
 
 
-      Pedometer.isStepCountingAvailable((isAvailable) => {
-        console.log("isStepCountingAvailable")
-        console.log(isAvailable)
-      });
+      // Pedometer.isStepCountingAvailable((isAvailable) => {
+      //   console.log("isStepCountingAvailable")
+      //   console.log(isAvailable)
+      // });
       
-      Pedometer.isDistanceAvailable((isAvailable) => {
-        console.log("isDistanceAvailable")
-        console.log(isAvailable)
+      // Pedometer.isDistanceAvailable((isAvailable) => {
+      //   console.log("isDistanceAvailable")
+      //   console.log(isAvailable)
     
-      });
+      // });
       
-      Pedometer.isFloorCountingAvailable((isAvailable) => {
-        console.log("isFloorCountingAvailable")
-        console.log(isAvailable)
-           });
+      // Pedometer.isFloorCountingAvailable((isAvailable) => {
+      //   console.log("isFloorCountingAvailable")
+      //   console.log(isAvailable)
+      //      });
       
-      Pedometer.isCadenceAvailable((isAvailable) => {
-        console.log("isCadenceAvailable")
-        console.log(isAvailable)
-           });
+      // Pedometer.isCadenceAvailable((isAvailable) => {
+      //   console.log("isCadenceAvailable")
+      //   console.log(isAvailable)
+      //      });
       
            this.startPedometer();
 
@@ -173,7 +173,6 @@ export default class Dashboard extends Component {
 
     startPedometer(){
 
-      console.log("sto qua");
       const now = new Date();
       Pedometer.startPedometerUpdatesFromDate(now.getTime(), (pedometerData) => {
 

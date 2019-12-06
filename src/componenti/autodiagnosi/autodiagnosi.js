@@ -1,217 +1,157 @@
 import React, {
-    Component
+  Component
 } from 'react';
 
 import {
-    View,
-    Text,
+  View,
+  ScrollView,
+  Text,
   TouchableOpacity,
-  TouchableHighlight,
-  ToastAndroid,
-  Modal
-  } from 'react-native';
-
-
-var style = require('./autodiagnosiStyle');
-
-
-import DrawerButton from '../utils/drawerbutton';
-
-import Wizard from "react-native-wizard";
-import Risposta from "./risposta";
-import RispostaImg from "./rispostaimg";
+  Image, StyleSheet
+} from 'react-native';
 
 
 
 
-// const steps =[
-      
-//   {component: Risposta, props : {domanda: 0}},
-//   {component: Risposta, props : {domanda: 1}},
-//   {component: Risposta, props : {domanda: 2}},
-//   {component: Risposta, props : {domanda: 3}},
-//   {component: Risposta, props : {domanda: 4}},
-
-// ]
+import { FlatGrid, SectionGrid } from 'react-native-super-grid';
 
 
 
-export default class Autodiagnosi extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.setDisbld = this.setDisbld.bind(this);
-        this.setDiagns = this.setDiagns.bind(this);
-        this.avanti = this.avanti.bind(this);
-        
+var fetchTimeout = require('fetch-timeout');
 
 
-        this.state = {
-          user:{},
-          isLastStep:'',
-          isFirstStep:'',
-          currentIndex:'',
-          disabled:true,
+const immagini = [
+  {immagine: require('../../immagini/diagnosi/haglund.png'), diagnosi:'Haglund'},
+  {immagine: require('../../immagini/diagnosi/piede_piatto.png'), diagnosi:'Piede piatto'},
+  {immagine: require('../../immagini/diagnosi/metatarsalgia.png'), diagnosi:'Metatarsalgia'}, //3 ???????
+  {immagine: require('../../immagini/diagnosi/allucevalgo_allucerigido.png'), diagnosi:'Alluce valgo'},//4 ???????
+  {immagine: require('../../immagini/diagnosi/4ditomartello_allung_accorc.png'), diagnosi:'Quarto dito a martello'},//5 ???????
+  {immagine: require('../../immagini/diagnosi/3ditomartello_allung_accorc.png'), diagnosi:'Terzo dito a martello'},//6 ???????
+  {immagine: require('../../immagini/diagnosi/2ditomartello_allung_accorc.png'), diagnosi:'Secondo dito a martello'},//7 ???????
+  {immagine: require('../../immagini/diagnosi/5ditovaro.png'), diagnosi:'Quinto dito varo'},
+  {immagine: require('../../immagini/diagnosi/brachimetatarsia.png'), diagnosi:'Brachimetatarsia'},
+  {immagine: require('../../immagini/diagnosi/spina_calcaneare.png'), diagnosi:'Spina calcaneare'},
+  {immagine: require('../../immagini/diagnosi/neuromaDiMorton.png'), diagnosi:'Neuroma di Morton'},//11 ???????
+  {immagine: require('../../immagini/diagnosi/sintattilia.png'), diagnosi:'Sintattilia'},
+]
+
+const dagnosi = ["Alluce valgo", "Alluce rigido", "Dito a martello", "Piede piatto", "Sintattilia", "Allungamento", "Accorciamento", "Haglund", "Spina", "Metatarsalagia", "Morton", "5 dito varo", "Brachimetatarsia"];
+
+
+export default class RispostaImg extends Component {
+
+  constructor(props) {
+      super(props);
+
+      this.state = {
+          domanda:-1,           
           diagnosi:'',
-          diagnosiFoto:'',
-          modalVisible:false
-                };
- 
-    }
 
-    setDisbld(){
-      this.setState({disabled:false})
+          disabled:true
+      };
+
+
+  }
+  static navigationOptions = {
+    drawerLabel: () => null     
+  };
+
+  async componentWillUpdate(){
+
+  
+     if(this.state.domanda != this.props.domanda){
+        await  this.setState({domanda:this.props.domanda})
+      }
+
+
     }
 
     
-    setDiagns(diagns){
-      this.setState({diagnosi:diagns})
-    }
+  async componentWillMount(){
+  
+      if(this.state.domanda != this.props.domanda){
+          await this.setState({domanda:this.props.domanda})
+      }
+     }
+  
+     _renderItem = (item, index) =>{
+      const myFontSize = 25;
+      
+      
+      return (  
+              
+              // <View style={{borderColor:'#333333', borderStyle:'solid', borderTopWidth:1, flex:1}}>
+                            <View style={{ 
+                              justifyContent: 'center', alignItems:'center', alignContent:'center', alignSelf:'center',
+                              width:150,
+                              height:150,
+                              borderRadius: 0,
+                              padding: 0
+                              }}>
 
-    avanti(diagnosi){
-      this.setState({diagnosiFoto:diagnosi})
-      this.wizard.next()
-    }
 
+<TouchableOpacity 
+onPress={()=>{//this.setState({dagnosi:item.diagnosi})
+          // this.props.avanti(item.diagnosi);
+          console.log(item)
+          this.props.navigation.navigate('Autodiagnosi2', {diagnosi:item.diagnosi})
 
+           }} 
+>
+
+ {item.diagnosi == "Spina calcaneare" || item.diagnosi == "Piede piatto"  ? 
+        <Image 
+        source={item.immagine} 
+        style={{flex:1, resizeMode:'contain', aspectRatio:0.9}}
+        >
+            
+        </Image>
+: 
+<Image 
+source={item.immagine} 
+style={{flex:1, resizeMode:'contain'}}
+>
     
-    static navigationOptions = {
-      drawerLabel: () => null     
-    };
+</Image>
+}
 
-    async componentDidMount(){
 
-    }
-
-    render() {
-
-      steps = [
+</TouchableOpacity>
+                  
+              {/* <View style={{flexDirection:'row',flex:1}}>
       
-        {component: RispostaImg, props : {domanda: -2, avanti:this.avanti, setDiagnosi:this.setDiagns}},
-        {component: Risposta, props : {domanda: 0, setDisabled:this.setDisbld, setDiagnosi:this.setDiagns}},
-        {component: Risposta, props : {domanda: 1, setDisabled:this.setDisbld, setDiagnosi:this.setDiagns}},
-        {component: Risposta, props : {domanda: 2, setDisabled:this.setDisbld, setDiagnosi:this.setDiagns}},
-        {component: Risposta, props : {domanda: 3, setDisabled:this.setDisbld, setDiagnosi:this.setDiagns}},
-        {component: Risposta, props : {domanda: 4, setDisabled:this.setDisbld, setDiagnosi:this.setDiagns}},
+              <View style={{flex:1,justifyContent:'flex-start'}}>
+              <Text style={{textAlign:'center',fontSize:myFontSize, color:'#988C6C', justifyContent:'flex-start'}}>{item.data} </Text>   
+              </View>
       
-      ]
+              <View style={{ flex:1, flexDirection:'row', justifyContent:'flex-end', marginHorizontal:'5%'}}>
+              <Text style={{textAlign:'center', fontSize:myFontSize, color:'#988C6C', }}>{item.completi}/{item.totali}</Text>           
+              </View>
+              </View> */}
+            </View> 
+        );
+      } 
+
+  render() {
 
       return (
-          <View style={style.mainView}>
-<DrawerButton/>
-
-
-<View style={style.mainView} >
-           
-           <Wizard
-        ref={(e) => {this.wizard = e}}
-        currentStep={(currentIndex, isFirstStep, isLastStep) => {
-             this.setState({
-                isLastStep  : isLastStep,
-                isFirstStep : isFirstStep,
-                currentIndex: currentIndex
-            })
-            // console.log(isLastStep)
-            // console.log(isFirstStep)
-            // console.log(currentIndex)
-         }}
-         steps={steps}
-
-        duration={500}
-               onNext={() => {this.setState({disabled:true})}}
-               onPrev={() => {this.setState({disabled:false})}}
-              onFinish={() => {
-                 //ToastAndroid.showWithGravity('Congratulazioni! Hai completato tutti gli esercizi.', ToastAndroid.SHORT, ToastAndroid.BOTTOM)
-                this.setState({modalVisible:true})
-                 this.wizard.goToStep(0)	
-                this.props.navigation.navigate('Informazioni')}
-              }
-    /> 
-  
-    <View style={{flex:0.2, flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
-
-
-
-    {!this.state.isFirstStep ? <TouchableOpacity 
-    style={{marginHorizontal:'5%', marginTop:10,paddingTop:10,paddingBottom:10, flex:1,
-    backgroundColor:'transparent',borderRadius:100, borderWidth: 1,borderColor: '#988C6C', marginBottom:'10%'}}
-    onPress={()=>this.wizard.prev()}>
-        <Text style={{textAlign:'center', fontSize:20, color:'#988C6C'}}> Indietro</Text>
-        </TouchableOpacity> : undefined}
-
-
-        <TouchableOpacity 
-                                                style={{marginHorizontal:'5%', marginTop:10,paddingTop:10,paddingBottom:10, flex:1,
-                                                backgroundColor:'transparent',borderRadius:100, borderWidth: 1,borderColor: '#9A2C45', marginBottom:'10%'}}
-                                                onPress={()=>{
-                                                    this.wizard.next()
-                                                  }}>
-                                                    <Text style={{textAlign:'center', fontSize:20, color:'#9A2C45'}}> Continua</Text>
-                                                    </TouchableOpacity>
-
-{/* 
-        {this.state.disabled ?
-                                            <TouchableOpacity disabled={this.state.disabled}
-                                            style={{marginHorizontal:'5%', marginTop:10,paddingTop:10,paddingBottom:10, flex:1,
-                                            backgroundColor:'transparent', opacity:100, borderRadius:100, borderWidth: 1,borderColor: 'gray', marginBottom:'10%'}}
-                                            onPress={()=>{
-                                                this.wizard.next()
-                                              }}>
-                                                <Text style={{textAlign:'center', fontSize:20, color:'gray'}}> Continua</Text>
-                                                </TouchableOpacity>
-:
-
-                                                <TouchableOpacity disabled={this.state.disabled}
-                                                style={{marginHorizontal:'5%', marginTop:10,paddingTop:10,paddingBottom:10, flex:1,
-                                                backgroundColor:'transparent',borderRadius:100, borderWidth: 1,borderColor: '#9A2C45', marginBottom:'10%'}}
-                                                onPress={()=>{
-                                                    this.wizard.next()
-                                                  }}>
-                                                    <Text style={{textAlign:'center', fontSize:20, color:'#9A2C45'}}> Continua</Text>
-                                                    </TouchableOpacity>
-        } */}
-
-
-<Modal
-          animationType="fade" 
-          transparent={true} 
-          visible={this.state.modalVisible}
-          >
-          <View style={{flex:1, width:'100%', justifyContent:'center', backgroundColor:'black', opacity:0.8}}> 
           
-          <View style={{flex:0.5, borderRadius:5, borderWidth:1, marginHorizontal:'10%', borderColor:'#333333'}}>
-            <View style={{backgroundColor: '#333333', flex: 1, justifyContent:'center', alignContent:'center', alignItems:'center'}}>
-                <Text style={{fontSize:25, color:'#988C6C', textAlign:'center'}}>La tua diagnosi è: {this.state.diagnosiFoto != '' ? this.state.diagnosiFoto : this.state.diagnosi}</Text> 
+        <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+         
+        <Text style={{fontSize:30, color:'#988C6C', textAlign:'center'}}>Dove hai dolore?</Text>
 
-                <Text style={{fontSize:25, color:'#9A2C45', textAlign:'center'}}>Quest' autodiagnosi non sostituisce la visita medica. In ogni caso è raccomandabile consultare lo specialista che potrebbe proporti delle ulteriori prove diagnostiche.</Text> 
+        <FlatGrid
+          items={immagini}
+          renderItem={({item, index}) => (this._renderItem(item, index))}
+           style={{flex:1}}
+          itemDimension={150} 
+          itemContainerStyle={{justifyContent:'center', alignContent:'center', alignItems:'center', padding:0}} 
+          spacing={10}
+          />  
 
-
-            </View>
-
-        <View style={{backgroundColor:'#303030', flex: 0.3, flexDirection:'row'}}>
-          
-          <View style={{flex:1, justifyContent:'center', alignContent:'center', alignItems:'center'}}>
-
-             <TouchableHighlight
-                onPress={() => {
-                  this.setState({modalVisible:false, diagnosi:'', diagnosiFoto:''}) 
-                }}>
-                <Text style={{fontSize:20, color:'#988C6C', textAlign:'center'}}>Ok</Text>
-              </TouchableHighlight>
-            </View>
-
-            </View>
-
-        </View>
-          </View>
-        </Modal>
-
-       
-        </View>
-
-          </View>
-          </View>
-        );
-      }
+       </View>
+      );
+    }
 }
+

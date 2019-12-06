@@ -106,25 +106,17 @@ export default class Risposta extends Component {
 
     async componentWillUpdate(){
 
-    
        if(this.state.domanda != this.props.domanda){
-      await  this.setState({domanda:this.props.domanda})
-
+        await  this.setState({domanda:this.props.domanda})
         this.getSelected(domande[this.state.domanda].risposte);
-
        }
-
-
       }
 
-      
     async componentWillMount(){
-    
+
         if(this.state.domanda != this.props.domanda){
             await this.setState({domanda:this.props.domanda})
-
             this.getSelected(domande[this.state.domanda].risposte);
-
         }
        }
     
@@ -133,7 +125,6 @@ export default class Risposta extends Component {
         if(this.state.domanda2.risposta == "Solo quando cammino" && this.state.domanda3.risposta == "No. Mi fa male solo con le scarpe"){
             this.setState({diagnosi:diagnosi[0]})
             console.log(diagnosi[0])
-
         }
 
         if(this.state.domanda2.risposta == "Entrambi i casi" && this.state.domanda3.risposta == "Si"){
@@ -144,17 +135,16 @@ export default class Risposta extends Component {
         if(this.state.domanda2.risposta == "Solo quando cammino" && this.state.domanda3.risposta == "No. Mi fa male solo con le scarpe" && this.state.domanda4.risposta == "Si. Il dolore è tanto piu forte quando cammino"){
                 this.setState({diagnosi:diagnosi[2]})
                 console.log(diagnosi[2])
-            }                
+        }
+
         if(this.state.domanda2.risposta == "Non mi fa male" && this.state.domanda3.risposta == "Non mi fa male"){
             this.setState({diagnosi:diagnosi[5]})
             console.log(diagnosi[5])
-        
         }
         
         if(this.state.domanda2.risposta == "Solo quando cammino" && this.state.domanda3.risposta == "No. Mi fa male solo con le scarpe" && this.state.domanda4.risposta == "Si. Il dolore è tanto piu forte quando cammino"){
             this.setState({diagnosi:diagnosi[6]})
             console.log(diagnosi[6])
-
         }
 
         if(this.state.domanda2.risposta == "Solo quando cammino" && this.state.domanda3.risposta == "Si" && this.state.domanda4.risposta == "Si. Il dolore è tanto piu forte quando cammino"){
@@ -191,12 +181,8 @@ export default class Risposta extends Component {
                     case 4:
                     this.setState({domanda5:{risposta: element.label}})
                     break;
-                    
                 }
-
             }
-
-   
         });
 
                 this.setState({disabled:false})
@@ -212,11 +198,10 @@ export default class Risposta extends Component {
         return (
             
           <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-           
           <Text style={{fontSize:30, color:'#988C6C', textAlign:'center'}}>{domande[this.state.domanda].domanda}</Text>
-
-            <RadioGroup radioButtons={domande[this.props.domanda].risposte} fontSize={25} fontColor={'#988C6C'} onPress={(data)=>this.getSelected(data)} />
+          <RadioGroup radioButtons={domande[this.props.domanda].risposte} fontSize={25} fontColor={'#988C6C'} onPress={(data)=>this.getSelected(data)} />
          </View>
+
         );
       }
 }

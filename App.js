@@ -30,6 +30,7 @@ import Riabilitazione from './src/componenti/riabilitazione/riabilitazione';
 import Classifica from './src/componenti/classifica/classifica';
 import Informazioni from './src/componenti/informazioni/informazioni';
 import Autodiagnosi from './src/componenti/autodiagnosi/autodiagnosi';
+import Autodiagnosi2 from './src/componenti/autodiagnosi/autodiagnosi2';
 import Impostazioni from './src/componenti/impostazioni/impostazioni';
 
 
@@ -92,6 +93,9 @@ const CustomDrawerContentComponent = (props) => (
         },
         Autodiagnosi: {
           screen: Autodiagnosi,
+        },       
+        Autodiagnosi2: {
+          screen: Autodiagnosi2,
         },          
         Impostazioni: {
           screen: Impostazioni,
